@@ -7,6 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleCabServiceTest {
 
@@ -18,5 +20,6 @@ public class SimpleCabServiceTest {
 
     @Test
     public void it_does_something() {
+        when(repository.getCountByMedallionAndPickupDatetime(null, null)).thenReturn(1);
     }
 }

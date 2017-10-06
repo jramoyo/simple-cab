@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  mysql:
+    build:
+      dockerfile: './Dockerfile.mysql'
+      context: '.'
+    environment:
+      - MYSQL_DATABASE=ny_cab_data
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    ports:
+      - 3307:3306

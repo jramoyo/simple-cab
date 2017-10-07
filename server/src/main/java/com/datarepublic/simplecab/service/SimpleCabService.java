@@ -38,12 +38,12 @@ public final class SimpleCabService {
             return repository.getCountByMedallionAndPickupDatetime(medallion, pickupDate);
         }
 
-        String key = medallion + "|" + toString(pickupDate);
+        String key = createKey(medallion, pickupDate);
         return cache.computeIfAbsent(key, _key -> repository.getCountByMedallionAndPickupDatetime(medallion, pickupDate));
     }
 
-    private String toString(Date pickupDate) {
-        return new SimpleDateFormat(DATE_PATTERN).format(pickupDate);
+    private String createKey(String medallion, Date pickupDate) {
+        return medallion + "|" + new SimpleDateFormat(DATE_PATTERN).format(pickupDate); // only the date part matters
     }
 
     public void invalidateCache() {

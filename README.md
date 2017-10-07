@@ -1,19 +1,56 @@
-```
+#simple-cab
+
+### Prerequisites
+
+- Java 8
+- Maven 3.5.0
+
+### Running the server
+
+A dockerised version of the database is included. To start the database, run: 
+
+```sh
 ./docker.sh
 ```
 
-```
-java -jar myjar.jar --spring.config.location=D:\wherever\application.properties
-```
+Then package and run the Spring Boot application:
 
 ```
+mvn package
+java -jar server/target/server-1.0-SNAPSHOT.jar
+```
+
+When using an existing database, the Spring Boot application needs to be configured to point to the database. Create an `application.properties` file with the following content:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost/ny_cab_data?useSSL=false
+spring.datasource.username=root
+spring.datasource.password=
+```
+
+Then package and run the Spring Boot application:
+
+```
+mvn package
+java -jar server/target/server-1.0-SNAPSHOT.jar --spring.config.location=<application.properties>
+```
+
+### Sending requests using `curl` 
+
+Get the number of trips of the specified medallions for the given pickup date.
+
+```sh
 curl "http://localhost:8080/trips/count?medallion=D7D598CD99978BD012A87A76A7C891B7&medallion=5455D5FF2BD94D10B304A15D4B7F2735&pickupDate=2013-12-01"
 ```
 
-```
+Get the number of trips of the specified medallions for the given pickup date (without using the cache).
+
+```sh
 curl "http://localhost:8080/trips/count?medallion=D7D598CD99978BD012A87A76A7C891B7&medallion=5455D5FF2BD94D10B304A15D4B7F2735&pickupDate=2013-12-01&ignoreCache=true"
 ```
 
-```
-curl -XDELETE "http://localhost:8080/cache"
+Delete the cache.
+
+```sh
+curl -XDELETE "http://localhost:8080/trips/count/cache"
 ```

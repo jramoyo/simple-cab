@@ -2,6 +2,7 @@ package com.datarepublic.simplecab.service;
 
 import com.datarepublic.simplecab.model.MedallionsSummary;
 import com.datarepublic.simplecab.repository.SimpleCabRepository;
+import org.apache.log4j.Logger;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,8 @@ import java.util.concurrent.ConcurrentMap;
 public final class SimpleCabService {
 
     private static final String DATE_PATTERN = "YYYY-MM-dd";
+
+    private final Logger logger = Logger.getLogger(this.getClass());
 
     private final ConcurrentMap<String, Integer> cache = new ConcurrentHashMap<>();
 
@@ -48,5 +51,6 @@ public final class SimpleCabService {
 
     public void invalidateCache() {
         cache.clear();
+        logger.warn("Cache invalidated.");
     }
 }

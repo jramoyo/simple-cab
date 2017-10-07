@@ -25,7 +25,7 @@ public final class SimpleCabController {
         return service.getMedallionsSummary(medallions, pickupDate, ignoreCache);
     }
 
-    @RequestMapping(value = "/cache", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/trips/count/cache", method = RequestMethod.DELETE)
     public void invalidateCache() {
         service.invalidateCache();
     }

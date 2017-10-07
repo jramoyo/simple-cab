@@ -35,21 +35,32 @@ mvn package
 java -jar server/target/server-1.0-SNAPSHOT.jar --spring.config.location=<application.properties>
 ```
 
-### Sending requests using `curl` 
+### REST API
+
+#### `GET /trips/count`
 
 Get the number of trips of the specified medallions for the given pickup date.
+
+Query Parameters:
+- `medallion` - string|array
+- `pickupDate` - date (`YYYY-MM-dd`)
+- `ignoreCache` - boolean (optional)
+
+Example:
 
 ```sh
 curl "http://localhost:8080/trips/count?medallion=D7D598CD99978BD012A87A76A7C891B7&medallion=5455D5FF2BD94D10B304A15D4B7F2735&pickupDate=2013-12-01"
 ```
 
-Get the number of trips of the specified medallions for the given pickup date (without using the cache).
-
 ```sh
 curl "http://localhost:8080/trips/count?medallion=D7D598CD99978BD012A87A76A7C891B7&medallion=5455D5FF2BD94D10B304A15D4B7F2735&pickupDate=2013-12-01&ignoreCache=true"
 ```
 
+#### `DELETE /trips/count/cache`
+
 Delete the cache.
+
+Example:
 
 ```sh
 curl -XDELETE "http://localhost:8080/trips/count/cache"

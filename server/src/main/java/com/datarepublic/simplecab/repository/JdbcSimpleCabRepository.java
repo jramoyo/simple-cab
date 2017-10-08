@@ -11,7 +11,7 @@ import java.util.Map;
 
 public final class JdbcSimpleCabRepository implements SimpleCabRepository {
 
-    private static final String SQL_DATE_PATTERN = "YYYY-MM-dd HH:mm:ss";
+    private static final String SQL_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     @Resource
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

@@ -7,7 +7,7 @@
 
 ### Running the server
 
-A dockerised version of the database is included. To start the database, run: 
+A dockerised version of the MySQL database is included (http://localhost:3307). To start the database, run (be patient): 
 
 ```sh
 ./docker.sh

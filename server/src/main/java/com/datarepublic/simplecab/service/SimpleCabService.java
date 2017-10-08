@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public final class SimpleCabService {
 
-    private static final String DATE_PATTERN = "YYYY-MM-dd";
+    private static final String DATE_PATTERN = "yyyy-MM-dd";
 
     private final Logger logger = Logger.getLogger(this.getClass());
 

@@ -17,7 +17,7 @@ mvn clean package
 
 A dockerised version of the MySQL database is included (http://localhost:3307). 
 
-To start the database, run (be patient): 
+To start the database, run (please be patient): 
 
 ```sh
 ./bin/database.sh

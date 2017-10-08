@@ -31,6 +31,22 @@ Start the Spring Boot application:
 ./bin/server.sh
 ```
 
+By default, the server is configured to run against the dockerised database. When using an existing database, it needs to be reconfigured. 
+
+Create an `application.properties` file with the following content:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost/ny_cab_data?useSSL=false
+spring.datasource.username=root
+spring.datasource.password=
+```
+
+Then start the Spring Boot application:
+
+```
+./bin/server.sh --spring.config.location=application.properties
+```
+
 #### 3. Running the client
 
 Display help:

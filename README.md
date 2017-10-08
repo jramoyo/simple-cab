@@ -31,7 +31,7 @@ Start the Spring Boot application:
 ./bin/server.sh
 ```
 
-By default, the server is configured to run against the dockerised database. When using an existing database, it needs to be reconfigured. 
+By default, the server is configured to run against the dockerised database. When using a different database, it needs to be reconfigured. 
 
 Create an `application.properties` file with the following content:
 
@@ -41,7 +41,7 @@ spring.datasource.username=root
 spring.datasource.password=
 ```
 
-Then start the Spring Boot application:
+Then start the Spring Boot application with the properties file:
 
 ```
 ./bin/server.sh --spring.config.location=application.properties
@@ -49,7 +49,7 @@ Then start the Spring Boot application:
 
 #### 3. Running the client
 
-Display help:
+To display help:
 
 ```sh
 ./bin/client.sh help

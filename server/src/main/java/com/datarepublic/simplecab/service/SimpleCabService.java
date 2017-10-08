@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public final class SimpleCabService {
+import static com.datarepublic.simplecab.Constants.DATE_PATTERN;
 
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
+public final class SimpleCabService {
 
     private final Logger logger = Logger.getLogger(this.getClass());
 

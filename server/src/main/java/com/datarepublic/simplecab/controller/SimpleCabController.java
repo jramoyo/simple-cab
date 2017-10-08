@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
+import static com.datarepublic.simplecab.Constants.DATE_PATTERN;
+
 @RestController
 public final class SimpleCabController {
 
@@ -19,7 +21,7 @@ public final class SimpleCabController {
     public @ResponseBody
     MedallionsSummary getMedallionsSummary(
             @RequestParam(name = "medallion") List<String> medallions,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date pickupDate,
+            @RequestParam @DateTimeFormat(pattern = DATE_PATTERN) Date pickupDate,
             @RequestParam(required = false, defaultValue = "false") boolean ignoreCache) {
 
         return service.getMedallionsSummary(medallions, pickupDate, ignoreCache);

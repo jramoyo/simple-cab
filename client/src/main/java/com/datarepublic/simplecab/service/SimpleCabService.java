@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface SimpleCabService {
 
-    void deleteCache();
+    void deleteCache() throws Exception;
 
-    MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate);
+    MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate) throws Exception;
 
-    MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate, boolean ignoreCache);
+    MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate, boolean ignoreCache) throws Exception;
 
 }

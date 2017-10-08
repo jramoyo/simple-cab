@@ -29,6 +29,8 @@ public class Client {
         MedallionsSummary summary = client.simpleCabService.getMedallionsSummary(medallions, pickupDate);
 
         summary.getTrips().forEach((k, v) -> System.out.println(k + " -> " + v));
+
+        client.simpleCabService.deleteCache();
     }
 
 }

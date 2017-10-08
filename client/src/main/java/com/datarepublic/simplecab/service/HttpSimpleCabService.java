@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +39,12 @@ public final class HttpSimpleCabService implements SimpleCabService {
     }
 
     @Override
-    public MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate) throws IOException {
+    public MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate) throws IOException, ScriptException {
         return getMedallionsSummary(medallions, pickupDate, false);
     }
 
     @Override
-    public MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate, boolean ignoreCache) throws IOException {
+    public MedallionsSummary getMedallionsSummary(List<String> medallions, Date pickupDate, boolean ignoreCache) throws IOException, ScriptException {
         String queryString = buildQueryString(medallions, pickupDate, ignoreCache);
         URL url = new URL(baseUrl + "/trips/count?" + queryString);
 
@@ -57,12 +56,19 @@ public final class HttpSimpleCabService implements SimpleCabService {
         return newMedallionsSummary(json);
     }
 
-    private String buildQueryString(List<String> medallions, Date pickupDate, boolean ignoreCache) {
-        String queryString = medallions.stream().map(s -> "medallion=" + s).collect(Collectors.joining("&"));
+    // visible for testing
+    String buildQueryString(List<String> medallions, Date pickupDate, boolean ignoreCache) {
 
-        if (pickupDate != null) {
-            queryString += "&pickupDate=" + new SimpleDateFormat(DATE_PATTERN).format(pickupDate);
+        if (medallions == null || medallions.isEmpty()) {
+            throw new IllegalArgumentException("At least one medallion is required");
         }
+
+        if (pickupDate == null) {
+            throw new IllegalArgumentException("Pickup date is required");
+        }
+
+        String queryString = medallions.stream().map(s -> "medallion=" + s).collect(Collectors.joining("&"));
+        queryString += "&pickupDate=" + new SimpleDateFormat(DATE_PATTERN).format(pickupDate);
 
         if (ignoreCache) {
             queryString += "&ignoreCache=true";
@@ -73,25 +79,17 @@ public final class HttpSimpleCabService implements SimpleCabService {
 
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> getResponseBody(HttpURLConnection con) throws IOException {
-
-        try {
-
-            StringBuilder sb = new StringBuilder();
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String line;
-                while ((line = in.readLine()) != null) {
-                    sb.append(line);
-                }
+    private Map<String, Object> getResponseBody(HttpURLConnection con) throws IOException, ScriptException {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+            String line;
+            while ((line = in.readLine()) != null) {
+                sb.append(line);
             }
-
-            String script = "Java.asJSONCompatible(" + sb.toString() + ")";
-            return (Map<String, Object>) this.scriptEngine.eval(script);
-
-        } catch (ScriptException ex) {
-            return Collections.emptyMap();
         }
 
+        String script = "Java.asJSONCompatible(" + sb.toString() + ")";
+        return (Map<String, Object>) this.scriptEngine.eval(script); // use Nashorn to parse the JSON
     }
 
     private MedallionsSummary newMedallionsSummary(Map<String, Object> json) {

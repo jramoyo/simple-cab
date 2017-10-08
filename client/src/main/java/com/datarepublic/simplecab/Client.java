@@ -17,6 +17,7 @@ public class Client {
     public static final String CMD_TRIP_COUNT = "trip-count";
     public static final String CMD_DELETE_CACHE = "delete-cache";
     public static final String CMD_HELP = "help";
+
     private final SimpleCabService simpleCabService;
 
     public Client(String baseUrl) {
@@ -83,16 +84,25 @@ public class Client {
         sb.append("usage: Client [command] [args]").append("\n\n");
         sb.append("Commands:").append("\n\n");
 
-        sb.append(CMD_TRIP_COUNT).append(" [base_url] [medallion<,medallion>] [pickup_date] [--ignore-cache]").append('\n')
+        sb.append("- ").append(CMD_TRIP_COUNT).append('\n');
+        sb.append("Returns the number of trips for the specified medallions and the given pickup date.").append("\n\n");
+
+        sb.append("usage:").append('\n')
+                .append(CMD_TRIP_COUNT).append(" [base_url] [medallion<,medallion>] [pickup_date] [--ignore-cache]").append('\n')
                 .append('\t').append("base_url       - base url of the server (http://localhost:8080)").append('\n')
                 .append('\t').append("medallion      - comma-separated medallions (D7D598CD99978BD012A87A76A7C891B7,5455D5FF2BD94D10B304A15D4B7F2735)").append('\n')
                 .append('\t').append("pickup_date    - pickup date in " + DATE_PATTERN + " format (2013-12-01)").append('\n')
                 .append('\t').append("--ignore-cache - whether to ignore the server cache").append("\n\n");
 
-        sb.append(CMD_DELETE_CACHE).append(" [base_url]").append('\n')
+        sb.append("- ").append(CMD_DELETE_CACHE).append('\n');
+        sb.append("Deletes the server cache.").append("\n\n");
+
+        sb.append("usage:").append('\n')
+                .append(CMD_DELETE_CACHE).append(" [base_url]").append('\n')
                 .append('\t').append("base_url       - base url of the server (http://localhost:8080)").append("\n\n");
 
-        sb.append(CMD_HELP).append('\n');
+        sb.append("- ").append(CMD_HELP).append('\n');
+        sb.append("Displays this help message.").append("\n\n");
 
         System.out.println(sb.toString());
     }
